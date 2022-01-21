@@ -1,0 +1,5 @@
+nltk
+spacy[cu114]
+gensim
+jupyterlab
+viola
