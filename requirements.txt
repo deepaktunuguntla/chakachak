@@ -5,4 +5,7 @@ spacy[cuda114]
 gensim
 pandas
 jupyterlab
+jupytext
 viola
+scikit-learn
+matplotlib
