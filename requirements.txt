@@ -1,5 +1,8 @@
+beautifulsoup4
+lxml
 nltk
-spacy[cu114]
+spacy[cuda114]
 gensim
+pandas
 jupyterlab
 viola
