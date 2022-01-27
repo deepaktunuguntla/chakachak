@@ -1,0 +1,12 @@
+beautifulsoup4
+lxml
+nltk
+spacy[cuda114]
+gensim
+pandas
+jupyterlab
+jupytext
+viola
+scikit-learn
+matplotlib
+wordcloud
