@@ -63,7 +63,7 @@ papers.head()
 all_titles = ','.join(papers.Title.values)
 ```
 
-```python
+```python tags=[]
 # create a wordcloud object
 wordcloud = WordCloud(
     background_color='white',
@@ -79,6 +79,8 @@ wordcloud.generate(all_titles)
 wordcloud.to_image()
 ```
 
-```python
+<!-- #region tags=[] -->
+### References
 
-```
+- [Topic modelling in Python: Latent Dirichlet Allocation (LDA)](https://towardsdatascience.com/end-to-end-topic-modeling-in-python-latent-dirichlet-allocation-lda-35ce4ed6b3e0)
+<!-- #endregion -->
