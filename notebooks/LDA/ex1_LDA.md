@@ -14,9 +14,12 @@ jupyter:
 
 ```python
 import os
+import re
 
 import gensim
 import nltk; nltk.download(info_or_id=['stopwords'])
+import pyLDAvis
+import pyLDAvis.gensim_models
 
 import pandas as pd
 
@@ -66,6 +69,12 @@ papers = (papers
 papers.head()
 ```
 
+#### Clean
+
+```python
+papers.Title = papers.Title.map(lambda x: re.sub('[:]','',x))
+```
+
 #### Remove stopwords
 
 ```python
@@ -85,7 +94,7 @@ tokenized_titles_wo_stop_words = [ remove_stopwords(tokens, stop_words) for toke
 ### Generate dictionary
 
 ```python
-dct = gensim.corpora.Dictionary(tokenized_titles_wo_stop_words)
+dictionary = gensim.corpora.Dictionary(tokenized_titles_wo_stop_words)
 ```
 
 ```python
@@ -103,7 +112,7 @@ where the tokens have the ids
 {'I': 0, 'am': 1, 'feeling': 2, 'good': 3}
 '''
 
-all_title_tokens_id_count = [ dct.doc2bow(title_tokens) for title_tokens in tokenized_titles_wo_stop_words ]
+corpus = [ dictionary.doc2bow(title_tokens) for title_tokens in tokenized_titles_wo_stop_words ]
 ```
 
 ### LDA model
@@ -113,8 +122,8 @@ all_title_tokens_id_count = [ dct.doc2bow(title_tokens) for title_tokens in toke
 num_topics = 10
 
 # model
-lda_model = gensim.models.LdaMulticore(corpus=all_title_tokens_id_count,
-                                       id2word=dct,
+lda_model = gensim.models.LdaMulticore(corpus=corpus,
+                                       id2word=dictionary,
                                        num_topics=num_topics)
 
 # Print the keyword in the 10 topics
@@ -122,5 +131,21 @@ lda_model.print_topics()
 ```
 
 ```python
-
+transformed_corpus = lda_model[corpus]
 ```
+
+### Visualise the topics
+
+```python
+pyLDAvis_obj = pyLDAvis.gensim_models.prepare(lda_model, corpus, dictionary)
+```
+
+```python
+pyLDAvis.display(pyLDAvis_obj)
+```
+
+<!-- #region tags=[] -->
+### References
+
+- [Topic modelling in Python: Latent Dirichlet Allocation (LDA)](https://towardsdatascience.com/end-to-end-topic-modeling-in-python-latent-dirichlet-allocation-lda-35ce4ed6b3e0)
+<!-- #endregion -->
